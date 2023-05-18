@@ -3,36 +3,150 @@ document.querySelector(".zero").addEventListener("click", zero);
 document.querySelector(".one").addEventListener("click", one);
 document.querySelector(".two").addEventListener("click", two);
 document.querySelector(".three").addEventListener("click", three);
+document.querySelector(".four").addEventListener("click", four);
+document.querySelector(".five").addEventListener("click", five);
+document.querySelector(".six").addEventListener("click", six);
+document.querySelector(".seven").addEventListener("click", seven);
+document.querySelector(".eight").addEventListener("click", eight);
+document.querySelector(".nine").addEventListener("click", nine);
 
-let result = 0;
+document.querySelector(".add").addEventListener("click", add);
+// document.querySelector(".equal").addEventListener("click", equal);
+
+let display = 0;
+let firstNum = 0;
+let secondNum = 0;
+let answer = 0;
 
 function clear() {
-    result = document.querySelector('#result').innerText = 0;
+    display = document.querySelector('#result').innerText = 0;
+    firstNum = 0;
+    secondNum = 0;
+    answer = 0;
 };
  
 function zero() {
-    if(result !== 0){
-        result = document.querySelector('#result').innerText += 0
+    if(display !== 0){
+        display = Number(document.querySelector('#result').innerHTML += 0);
     }else {
-    result = document.querySelector('#result').innerText = 0;
+        display = document.querySelector('#result').innerText = 0;
     }
 };
 
 function one() {
-    if (result === 0){
-        result = document.querySelector('#result').innerText = 1
+    if (display === 0 || firstNum !== 0 || answer !== 0){
+        display = document.querySelector('#result').innerText = 1;
     }else {
-        result = document.querySelector('#result').innerText += 1;
+        display = Number(document.querySelector('#result').innerText += 1);
     }    
 };
 
 function two() {
-    result = document.querySelector("#result").innerText = 2;
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 2;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 2);
+    }    
 };
 
 function three() {
-    result = document.querySelector("#result").innerText = 3;
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 3;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 3);
+    }    
 };
+
+function four() {
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 4;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 4);
+    }    
+};
+
+function five() {
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 5;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 5);
+    }    
+};
+
+function six() {
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 6;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 6);
+    }    
+};
+
+function seven() {
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 7;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 7);
+    }    
+};
+
+function eight() {
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 8;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 8);
+    }    
+};
+
+function nine() {
+    if (display === 0){
+        display = document.querySelector('#result').innerText = 9;
+    }else {
+        display = Number(document.querySelector('#result').innerText += 9);
+    }    
+};
+
+function add() {
+    firstNum = display;
+
+    const equal = document.querySelector('.equal')
+    
+    equal.addEventListener('click', function() {
+        
+        secondNum = display;
+        answer = firstNum + display;
+
+        firstNum = 0;
+
+        return display = Number(document.querySelector('#result').innerText = answer);
+
+    });
+
+    // equals)
+
+    // function equals(a, b) {
+    //     a = firstNum;
+    //     b = display;
+    //     answer = a + b
+    //     firstNum = 0;
+    //     return display = Number(document.querySelector('#result').innerText = answer);
+        
+    // }
+    
+    
+
+}
+
+
+
+console.log(display)
+console.log(firstNum)
+console.log(secondNum)
+console.log(answer)
+
+// function equal() {
+//     secondNum = result;
+// }
+
 
 
 

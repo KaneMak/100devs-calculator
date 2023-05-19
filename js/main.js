@@ -1,4 +1,6 @@
-document.querySelector(".clear").addEventListener("click", clear);
+
+// Event Listeners for clicking buttons 0 through 9
+
 document.querySelector(".zero").addEventListener("click", zero);
 document.querySelector(".one").addEventListener("click", one);
 document.querySelector(".two").addEventListener("click", two);
@@ -10,31 +12,33 @@ document.querySelector(".seven").addEventListener("click", seven);
 document.querySelector(".eight").addEventListener("click", eight);
 document.querySelector(".nine").addEventListener("click", nine);
 
-document.querySelector(".add").addEventListener("click", add);
-// document.querySelector(".equal").addEventListener("click", equal);
 
+// Event Listeners for math buttons and clear
+
+document.querySelector(".clear").addEventListener("click", clear);
+document.querySelector(".add").addEventListener("click", add);
+// document.querySelector(".minus").addEventListener("click", sub);
+
+
+// Variables for numbers to math
 let display = 0;
 let firstNum = 0;
 let secondNum = 0;
 let answer = 0;
 
-function clear() {
-    display = document.querySelector('#result').innerText = 0;
-    firstNum = 0;
-    secondNum = 0;
-    answer = 0;
-};
- 
+
+// Functions for pressing buttons 0 - 9
+
 function zero() {
-    if(display !== 0){
-        display = Number(document.querySelector('#result').innerHTML += 0);
-    }else {
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 0;
-    }
+    }else {
+        display = Number(document.querySelector('#result').innerText += 0);
+    }    
 };
 
 function one() {
-    if (display === 0 || firstNum !== 0 || answer !== 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 1;
     }else {
         display = Number(document.querySelector('#result').innerText += 1);
@@ -42,7 +46,7 @@ function one() {
 };
 
 function two() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 2;
     }else {
         display = Number(document.querySelector('#result').innerText += 2);
@@ -50,7 +54,7 @@ function two() {
 };
 
 function three() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 3;
     }else {
         display = Number(document.querySelector('#result').innerText += 3);
@@ -58,7 +62,7 @@ function three() {
 };
 
 function four() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 4;
     }else {
         display = Number(document.querySelector('#result').innerText += 4);
@@ -66,7 +70,7 @@ function four() {
 };
 
 function five() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0) {
         display = document.querySelector('#result').innerText = 5;
     }else {
         display = Number(document.querySelector('#result').innerText += 5);
@@ -74,7 +78,7 @@ function five() {
 };
 
 function six() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 6;
     }else {
         display = Number(document.querySelector('#result').innerText += 6);
@@ -82,7 +86,7 @@ function six() {
 };
 
 function seven() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 7;
     }else {
         display = Number(document.querySelector('#result').innerText += 7);
@@ -90,7 +94,7 @@ function seven() {
 };
 
 function eight() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 8;
     }else {
         display = Number(document.querySelector('#result').innerText += 8);
@@ -98,11 +102,21 @@ function eight() {
 };
 
 function nine() {
-    if (display === 0){
+    if (display === 0 || firstNum !== 0 || secondNum !== 0 || answer !== 0){
         display = document.querySelector('#result').innerText = 9;
     }else {
         display = Number(document.querySelector('#result').innerText += 9);
     }    
+};
+
+
+// Functions for math buttons including clear
+
+function clear() {
+    display = document.querySelector('#result').innerText = 0;
+    firstNum = 0;
+    secondNum = 0;
+    answer = 0;
 };
 
 function add() {
@@ -113,89 +127,35 @@ function add() {
     equal.addEventListener('click', function() {
         
         secondNum = display;
-        answer = firstNum + display;
+        answer = firstNum + secondNum;
 
         firstNum = 0;
+        secondNum = 0;
 
         return display = Number(document.querySelector('#result').innerText = answer);
-
     });
-
-    // equals)
-
-    // function equals(a, b) {
-    //     a = firstNum;
-    //     b = display;
-    //     answer = a + b
-    //     firstNum = 0;
-    //     return display = Number(document.querySelector('#result').innerText = answer);
-        
-    // }
-    
-    
-
 }
 
+// function sub() {
+//     firstNum = display;
 
-
-console.log(display)
-console.log(firstNum)
-console.log(secondNum)
-console.log(answer)
-
-// function equal() {
-//     secondNum = result;
-// }
-
-
-
-
-// let calculator = {
+//     const equal = document.querySelector('.equal')
     
-//     result: 0,
-
-//     // make method for sum
-
-//     // make method for subtract
-
-//     // make method for multiply
-
-//     //make method for division
-
-//     //make method for equals
-
-//     //make method for individual button presses 
-
-//     clear() {
-//         document.querySelector('#result').innerText = 0;
-//     },
-     
-//     zero() {
-//         document.querySelector('#result').innerText = 0;
+//     equal.addEventListener('click', function() {
         
-//     },
+//         secondNum = display;
+//         answer = Number(firstNum - secondNum);
 
-//     one() {
-//         document.querySelector('#result').innerText = 1;
-//     },
+//         firstNum = 0;
 
-//     two() {
-//         document.querySelector("#result").innerText = 2;
-//     },
-
-//     three() {
-//         document.querySelector("#result").innerText = 3;
-//     },
-
-
+//         return display = Number(document.querySelector('#result').innerText = answer);
+//     });
 // }
 
 
-// document.querySelector(".clear").addEventListener("click", calculator.clear);
-// document.querySelector(".zero").addEventListener("click", calculator.zero);
-// document.querySelector(".one").addEventListener("click", calculator.one);
-// document.querySelector(".two").addEventListener("click", calculator.two);
-// document.querySelector(".three").addEventListener("click", calculator.three);
+
+// Code to use keyboard number buttons
+
 
 // // const numberDisplay = document.getElementById('result');
 

@@ -50,15 +50,15 @@ footer {
      margin-top: 100px;
      border-radius: 30px;
      display: flex;
+     flex-wrap: wrap;
      justify-content: center;
 }
 
-#result {
+#display {
      background-color: white;
      height: 75px;
      width: 300px;
      margin-top: 75px;
-     position: fixed;
      font-size: 75px;
      display: flex;
      justify-content: flex-end;
@@ -69,13 +69,9 @@ footer {
 #keypad {
      height: 370px;
      width: 300px;
-     margin-top: 200px;
      display: grid;
-     gap: 1fr;
      grid-template-rows: repeat(5, 1fr);
      grid-template-columns: repeat(4, 1fr);
-     /* justify-content: space-evenly;
-     flex-wrap: wrap; */
 }
 
 .button {

@@ -203,6 +203,30 @@ let calculator = {
                     calculator.toDisplay(2);
             }, 
         },
+
+        three: {
+            key: document.querySelector('.three'),
+            output: 
+                function() {
+                    calculator.toDisplay(3);
+            }, 
+        },
+
+        addition: {
+            key: document.querySelector('.add'),
+            memory: 
+                function() {
+                    calculator.firstNum = calculator.firstNum + calculator.output;
+                },
+        },
+
+        equal: {
+            key: document.querySelector('.equal'),
+            output: 
+                function() {
+                    calculator.toDisplay();
+            }, 
+        },
     },
 
      
@@ -212,13 +236,23 @@ let calculator = {
             } else {
                 calculator.output = Number(calculator.display.innerText += num);
             }
-        }
+    },
     
+    init: function() {
+        calculator.buttons.one.key.addEventListener('click', calculator.buttons.one.output);
+        calculator.buttons.two.key.addEventListener('click', calculator.buttons.two.output);
+        calculator.buttons.three.key.addEventListener('click', calculator.buttons.three.output);
+        calculator.buttons.addition.key.addEventListener('click', calculator.buttons.addition.memory);
+        calculator.buttons.equal.key.addEventListener('click', calculator.buttons.equal.output);
+    }
 }
 
-
-calculator.buttons.one.key.addEventListener('click', calculator.buttons.one.output)
-calculator.buttons.two.key.addEventListener('click', calculator.buttons.two.output)
+calculator.init();
+// calculator.buttons.one.key.addEventListener('click', calculator.buttons.one.output)
+// calculator.buttons.two.key.addEventListener('click', calculator.buttons.two.output)
+// calculator.buttons.three.key.addEventListener('click', calculator.buttons.three.output)
+// calculator.buttons.addition.key.addEventListener('click', calculator.buttons.addition.memory)
+// calculator.buttons.equal.key.addEventListener('click', calculator.buttons.equal.output)
 
 
 

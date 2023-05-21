@@ -185,74 +185,240 @@ let calculator = {
     output: 0,
     firstNum: 0,
     secondNum: 0,
-    answer: 0,
+    answer: 0, 
+    memCheck: 0,
+    lengthTest: function() {
+        let lengthTest = calculator.output.toString()
+        console.log(lengthTest.length)
+            if (lengthTest.length > 6 ) {
+                calculator.output = 0
+                calculator.output = calculator.display.innerText = "ERROR"
+            }
+    },
 
-    buttons: {
-        one: {
-            key: document.querySelector('.one'),
+    inputs: {
+
+        zero: {
+            button: document.querySelector('.zero'),
             output: 
                 function() {
+                    calculator.toDisplay(0);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        one: {
+            button: document.querySelector('.one'),
+            output: 
+                function() {
+
                     calculator.toDisplay(1);
+                    calculator.memCheck = 1
             }, 
         },
 
         two: {
-            key: document.querySelector('.two'),
+            button: document.querySelector('.two'),
             output: 
                 function() {
                     calculator.toDisplay(2);
+                    calculator.memCheck = 1
             }, 
         },
 
         three: {
-            key: document.querySelector('.three'),
+            button: document.querySelector('.three'),
             output: 
                 function() {
                     calculator.toDisplay(3);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        four: {
+            button: document.querySelector('.four'),
+            output: 
+                function() {
+                    calculator.toDisplay(4);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        five: {
+            button: document.querySelector('.five'),
+            output: 
+                function() {
+                    calculator.toDisplay(5);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        six: {
+            button: document.querySelector('.six'),
+            output: 
+                function() {
+                    calculator.toDisplay(6);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        seven: {
+            button: document.querySelector('.seven'),
+            output: 
+                function() {
+                    calculator.toDisplay(7);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        eight: {
+            button: document.querySelector('.eight'),
+            output: 
+                function() {
+                    calculator.toDisplay(8);
+                    calculator.memCheck = 1
+            }, 
+        },
+
+        nine: {
+            button: document.querySelector('.nine'),
+            output: 
+                function() {
+                    calculator.toDisplay(9);
+                    calculator.memCheck = 1
             }, 
         },
 
         addition: {
-            key: document.querySelector('.add'),
+            button: document.querySelector('.add'),
             memory: 
                 function() {
-                    calculator.firstNum = calculator.firstNum + calculator.output;
+                    calculator.memCheck = 0
+                    calculator.firstNum = calculator.output;
+
+                    calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.add);
+                },
+        },
+
+        subtract: {
+            button: document.querySelector('.subtract'),
+            memory: 
+                function() {
+                    calculator.memCheck = 0
+                    calculator.firstNum = calculator.output;
+
+                    calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.subtract);
+                },
+        },
+
+        multiply: {
+            button: document.querySelector('.multiply'),
+            memory: 
+                function() {
+                    calculator.memCheck = 0
+                    calculator.firstNum = calculator.output;
+
+                    calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.multiply);
+                },
+        },
+
+        divide: {
+            button: document.querySelector('.divide'),
+            memory: 
+                function() {
+                    calculator.memCheck = 0
+                    calculator.firstNum = calculator.output;
+
+                    calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.divide);
+                },
+        },
+
+        clear: {
+            button: document.querySelector('.clear'),
+            memory: 
+                function() {
+                    calculator.memCheck = 0;
+                    calculator.firstNum = 0;
+                    calculator.secondNum = 0;
+                    calculator.output = Number(calculator.display.innerText = 0);
+                    calculator.answer = 0;
                 },
         },
 
         equal: {
-            key: document.querySelector('.equal'),
-            output: 
-                function() {
-                    calculator.toDisplay();
+            button: document.querySelector('.equal'),
+            
+            add: function(a) { 
+                        calculator.secondNum = calculator.output;
+                        calculator.answer = calculator.firstNum + calculator.secondNum;
+                        calculator.output = calculator.display.innerText = calculator.answer;
+                        calculator.firstNum = 0;
+                        calculator.secondNum = 0;
+                        calculator.memCheck = 0;
+            },
+
+            subtract: function(){
+                        calculator.secondNum = calculator.output;
+                        calculator.answer = calculator.firstNum - calculator.secondNum;
+                        calculator.output = calculator.display.innerText = calculator.answer;
+                        calculator.firstNum = 0;
+                        calculator.secondNum = 0;
+                        calculator.memCheck = 0;
             }, 
+
+            multiply: function(){
+                        calculator.secondNum = calculator.output;
+                        calculator.answer = calculator.firstNum * calculator.secondNum;
+                        calculator.output = calculator.display.innerText = calculator.answer;
+                        calculator.firstNum = 0;
+                        calculator.secondNum = 0;
+                        calculator.memCheck = 0;
+            }, 
+
+            divide: function(){
+                        calculator.secondNum = calculator.output;
+                        calculator.answer = calculator.firstNum / calculator.secondNum;
+                        calculator.output = calculator.display.innerText = calculator.answer;
+                        calculator.firstNum = 0;
+                        calculator.secondNum = 0;
+                        calculator.memCheck = 0;
+            }, 
+            
+            
         },
     },
 
-     
     toDisplay: function(num) {
-            if (calculator.output === 0 || calculator.firstNum !== 0 || calculator.secondNum !== 0 || calculator.answer !== 0) {
+            calculator.lengthTest();
+
+            if (calculator.memCheck === 0 ) {
                 calculator.output = Number(calculator.display.innerText = num);
-            } else {
+            } else if (calculator.memCheck !== 0) {
                 calculator.output = Number(calculator.display.innerText += num);
             }
     },
     
     init: function() {
-        calculator.buttons.one.key.addEventListener('click', calculator.buttons.one.output);
-        calculator.buttons.two.key.addEventListener('click', calculator.buttons.two.output);
-        calculator.buttons.three.key.addEventListener('click', calculator.buttons.three.output);
-        calculator.buttons.addition.key.addEventListener('click', calculator.buttons.addition.memory);
-        calculator.buttons.equal.key.addEventListener('click', calculator.buttons.equal.output);
-    }
+        calculator.inputs.zero.button.addEventListener('click', calculator.inputs.zero.output);
+        calculator.inputs.one.button.addEventListener('click', calculator.inputs.one.output);
+        calculator.inputs.two.button.addEventListener('click', calculator.inputs.two.output);
+        calculator.inputs.three.button.addEventListener('click', calculator.inputs.three.output);
+        calculator.inputs.four.button.addEventListener('click', calculator.inputs.four.output);
+        calculator.inputs.five.button.addEventListener('click', calculator.inputs.five.output);
+        calculator.inputs.six.button.addEventListener('click', calculator.inputs.six.output);
+        calculator.inputs.seven.button.addEventListener('click', calculator.inputs.seven.output);
+        calculator.inputs.eight.button.addEventListener('click', calculator.inputs.eight.output);
+        calculator.inputs.nine.button.addEventListener('click', calculator.inputs.nine.output);
+        calculator.inputs.addition.button.addEventListener('click', calculator.inputs.addition.memory);
+        calculator.inputs.subtract.button.addEventListener('click', calculator.inputs.subtract.memory);
+        calculator.inputs.multiply.button.addEventListener('click', calculator.inputs.multiply.memory);
+        calculator.inputs.divide.button.addEventListener('click', calculator.inputs.divide.memory);
+        calculator.inputs.clear.button.addEventListener('click', calculator.inputs.clear.memory);
+    },
 }
 
 calculator.init();
-// calculator.buttons.one.key.addEventListener('click', calculator.buttons.one.output)
-// calculator.buttons.two.key.addEventListener('click', calculator.buttons.two.output)
-// calculator.buttons.three.key.addEventListener('click', calculator.buttons.three.output)
-// calculator.buttons.addition.key.addEventListener('click', calculator.buttons.addition.memory)
-// calculator.buttons.equal.key.addEventListener('click', calculator.buttons.equal.output)
+
 
 
 

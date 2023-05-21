@@ -186,10 +186,10 @@ let calculator = {
     firstNum: 0,
     secondNum: 0,
     answer: 0, 
+    memory: 0,
     memCheck: 0,
     lengthTest: function() {
         let lengthTest = calculator.output.toString()
-        console.log(lengthTest.length)
             if (lengthTest.length > 6 ) {
                 calculator.output = 0
                 calculator.output = calculator.display.innerText = "ERROR"
@@ -295,6 +295,9 @@ let calculator = {
                 function() {
                     calculator.memCheck = 0
                     calculator.firstNum = calculator.output;
+                    calculator.secondNum = calculator.firstNum;
+                    calculator.memory = calculator.memory + calculator.firstNum;
+
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.add);
                 },
@@ -342,6 +345,7 @@ let calculator = {
                     calculator.secondNum = 0;
                     calculator.output = Number(calculator.display.innerText = 0);
                     calculator.answer = 0;
+                    calculator.memory = 0;
                 },
         },
 
@@ -350,11 +354,12 @@ let calculator = {
             
             add: function(a) { 
                         calculator.secondNum = calculator.output;
-                        calculator.answer = calculator.firstNum + calculator.secondNum;
+                        calculator.answer = calculator.output + calculator.memory;
                         calculator.output = calculator.display.innerText = calculator.answer;
                         calculator.firstNum = 0;
                         calculator.secondNum = 0;
                         calculator.memCheck = 0;
+                        calculator.answer = 0;
             },
 
             subtract: function(){

@@ -183,11 +183,25 @@ let calculator = {
     
     display: document.querySelector('#display'),
     output: 0,
-    firstNum: 0,
+    firstNum: [],
     secondNum: 0,
     answer: 0, 
     memory: 0,
-    memCheck: 0,
+    memCheck: false,
+
+    pressNumButton: function(num) {
+                        calculator.firstNum.push(num)
+                        calculator.toDisplay(num);
+                        calculator.memCheck = true;
+    },
+
+    equalClear: function() {
+                    // calculator.firstNum = [];
+                    // calculator.secondNum = [];
+                    calculator.memCheck = false;
+                    // calculator.answer = 0;
+    },
+
     lengthTest: function() {
         let lengthTest = calculator.output.toString()
             if (lengthTest.length > 6 ) {
@@ -202,27 +216,23 @@ let calculator = {
             button: document.querySelector('.zero'),
             output: 
                 function() {
-                    calculator.toDisplay(0);
-                    calculator.memCheck = 1
-            }, 
+                    calculator.pressNumButton(0)
+                }
         },
 
         one: {
             button: document.querySelector('.one'),
             output: 
                 function() {
-
-                    calculator.toDisplay(1);
-                    calculator.memCheck = 1
-            }, 
+                    calculator.pressNumButton(1);
+                },
         },
 
         two: {
             button: document.querySelector('.two'),
             output: 
                 function() {
-                    calculator.toDisplay(2);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(2);
             }, 
         },
 
@@ -230,8 +240,7 @@ let calculator = {
             button: document.querySelector('.three'),
             output: 
                 function() {
-                    calculator.toDisplay(3);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(3);
             }, 
         },
 
@@ -239,8 +248,7 @@ let calculator = {
             button: document.querySelector('.four'),
             output: 
                 function() {
-                    calculator.toDisplay(4);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(4);
             }, 
         },
 
@@ -248,8 +256,7 @@ let calculator = {
             button: document.querySelector('.five'),
             output: 
                 function() {
-                    calculator.toDisplay(5);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(5);
             }, 
         },
 
@@ -257,8 +264,7 @@ let calculator = {
             button: document.querySelector('.six'),
             output: 
                 function() {
-                    calculator.toDisplay(6);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(6);
             }, 
         },
 
@@ -266,8 +272,7 @@ let calculator = {
             button: document.querySelector('.seven'),
             output: 
                 function() {
-                    calculator.toDisplay(7);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(7);
             }, 
         },
 
@@ -275,8 +280,7 @@ let calculator = {
             button: document.querySelector('.eight'),
             output: 
                 function() {
-                    calculator.toDisplay(8);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(8);
             }, 
         },
 
@@ -284,8 +288,7 @@ let calculator = {
             button: document.querySelector('.nine'),
             output: 
                 function() {
-                    calculator.toDisplay(9);
-                    calculator.memCheck = 1
+                    calculator.pressNumButton(9);
             }, 
         },
 
@@ -293,13 +296,14 @@ let calculator = {
             button: document.querySelector('.add'),
             memory: 
                 function() {
-                    calculator.memCheck = 0
-                    calculator.firstNum = calculator.output;
-                    calculator.secondNum = calculator.firstNum;
-                    calculator.memory = calculator.memory + calculator.firstNum;
-
-
+                    
+                    calculator.memCheck = false;
+                    
+                    calculator.firstNum.push('+');
+                    console.log(calculator.firstNum)
+                    
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.add);
+                    
                 },
         },
 
@@ -307,7 +311,7 @@ let calculator = {
             button: document.querySelector('.subtract'),
             memory: 
                 function() {
-                    calculator.memCheck = 0
+                    calculator.memCheck = false;
                     calculator.firstNum = calculator.output;
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.subtract);
@@ -318,7 +322,7 @@ let calculator = {
             button: document.querySelector('.multiply'),
             memory: 
                 function() {
-                    calculator.memCheck = 0
+                    calculator.memCheck = false;
                     calculator.firstNum = calculator.output;
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.multiply);
@@ -329,7 +333,7 @@ let calculator = {
             button: document.querySelector('.divide'),
             memory: 
                 function() {
-                    calculator.memCheck = 0
+                    calculator.memCheck = false;
                     calculator.firstNum = calculator.output;
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.divide);
@@ -340,7 +344,7 @@ let calculator = {
             button: document.querySelector('.clear'),
             memory: 
                 function() {
-                    calculator.memCheck = 0;
+                    calculator.memCheck = false;
                     calculator.firstNum = 0;
                     calculator.secondNum = 0;
                     calculator.output = Number(calculator.display.innerText = 0);
@@ -352,14 +356,28 @@ let calculator = {
         equal: {
             button: document.querySelector('.equal'),
             
-            add: function(a) { 
-                        calculator.secondNum = calculator.output;
-                        calculator.answer = calculator.output + calculator.memory;
-                        calculator.output = calculator.display.innerText = calculator.answer;
-                        calculator.firstNum = 0;
-                        calculator.secondNum = 0;
-                        calculator.memCheck = 0;
-                        calculator.answer = 0;
+            add: function() { 
+
+
+                    let addIndex = calculator.firstNum.lastIndexOf('+');
+                    console.log(addIndex)
+                    console.log(calculator.firstNum.slice(addIndex))
+                    calculator.memory = calculator.firstNum.slice(addIndex)
+
+                    // calculator.firstNum.push(calculator.secondNum);
+                    // calculator.firstNum.push(calculator.memory);
+                    
+                    let strFirstNum = calculator.firstNum.join('');
+                    calculator.answer = eval(strFirstNum);
+                    calculator.output = Number(calculator.display.   innerText = calculator.answer);
+                    calculator.firstNum = [calculator.answer].concat(calculator.memory);
+                    // calculator.secondNum = [0];
+                    console.log(calculator.firstNum)
+
+                    
+                    // calculator.lengthTest();
+                    // calculator.output = Number(calculator.display.   innerText = calculator.answer);
+                    // calculator.equalClear();
             },
 
             subtract: function(){
@@ -368,7 +386,7 @@ let calculator = {
                         calculator.output = calculator.display.innerText = calculator.answer;
                         calculator.firstNum = 0;
                         calculator.secondNum = 0;
-                        calculator.memCheck = 0;
+                        calculator.memCheck = false;
             }, 
 
             multiply: function(){
@@ -377,7 +395,7 @@ let calculator = {
                         calculator.output = calculator.display.innerText = calculator.answer;
                         calculator.firstNum = 0;
                         calculator.secondNum = 0;
-                        calculator.memCheck = 0;
+                        calculator.memCheck = false;
             }, 
 
             divide: function(){
@@ -386,7 +404,7 @@ let calculator = {
                         calculator.output = calculator.display.innerText = calculator.answer;
                         calculator.firstNum = 0;
                         calculator.secondNum = 0;
-                        calculator.memCheck = 0;
+                        calculator.memCheck = false;
             }, 
             
             
@@ -395,10 +413,14 @@ let calculator = {
 
     toDisplay: function(num) {
             calculator.lengthTest();
-
-            if (calculator.memCheck === 0 ) {
+            // let lengthTest = calculator.output.toString()
+            
+            // if (lengthTest.length > 6 ) {
+            //     calculator.output = calculator.display.innerText = "ERROR"
+            // }
+            if (calculator.memCheck === false && calculator.output !== "ERROR") {
                 calculator.output = Number(calculator.display.innerText = num);
-            } else if (calculator.memCheck !== 0) {
+            } else if (calculator.memCheck !== false && calculator.output !== "ERROR") {
                 calculator.output = Number(calculator.display.innerText += num);
             }
     },

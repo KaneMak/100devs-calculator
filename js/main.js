@@ -184,22 +184,33 @@ let calculator = {
     display: document.querySelector('#display'),
     output: 0,
     firstNum: [],
-    secondNum: 0,
+    secondNum: [],
     answer: 0, 
     memory: 0,
     memCheck: false,
+    prevAnswer: false,
 
     pressNumButton: function(num) {
-                        calculator.firstNum.push(num)
-                        calculator.toDisplay(num);
-                        calculator.memCheck = true;
+        if(calculator.prevAnswer){
+            calculator.equalClear();
+        }
+        calculator.firstNum.push(num);
+        calculator.toDisplay(num);
+        calculator.memCheck = true;
+                        
+    },
+
+    resetCalculator: function() {
+        calculator.firstNum = [];
+        calculator.secondNum = [];
+        calculator.answer = 0;
+        calculator.memory = 0;
+        calculator.prevAnswer = false;
     },
 
     equalClear: function() {
-                    // calculator.firstNum = [];
-                    // calculator.secondNum = [];
-                    calculator.memCheck = false;
-                    // calculator.answer = 0;
+        calculator.resetCalculator();
+        calculator.output = 0;
     },
 
     lengthTest: function() {
@@ -296,10 +307,14 @@ let calculator = {
             button: document.querySelector('.add'),
             memory: 
                 function() {
-                    
+                    if(calculator.prevAnswer){
+                        calculator.firstNum.push(calculator.output);
+                    }
+                    calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.equalAgain);
                     calculator.memCheck = false;
                     
                     calculator.firstNum.push('+');
+                    calculator.secondNum.push('+');
                     console.log(calculator.firstNum)
                     
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.add);
@@ -344,40 +359,50 @@ let calculator = {
             button: document.querySelector('.clear'),
             memory: 
                 function() {
-                    calculator.memCheck = false;
-                    calculator.firstNum = 0;
-                    calculator.secondNum = 0;
-                    calculator.output = Number(calculator.display.innerText = 0);
-                    calculator.answer = 0;
-                    calculator.memory = 0;
+                    equalClear();
                 },
         },
 
         equal: {
             button: document.querySelector('.equal'),
+
+            equalAgain: function() {
+                            calculator.secondNum = calculator.firstNum;
+                            calculator.secondNum = [calculator.answer].concat(calculator.memory);
+                            let strSecondNum = calculator.secondNum.join('');
+                            calculator.answer = eval(strSecondNum);
+                            calculator.output = Number(calculator.display.innerText = calculator.answer);
+                            // calculator.equalClear();
+                            calculator.firstNum = [];
+                            calculator.prevAnswer = true;
+                            console.log('equalAgain')
+            },
             
             add: function() { 
 
-
+                    
                     let addIndex = calculator.firstNum.lastIndexOf('+');
                     console.log(addIndex)
                     console.log(calculator.firstNum.slice(addIndex))
                     calculator.memory = calculator.firstNum.slice(addIndex)
 
-                    // calculator.firstNum.push(calculator.secondNum);
-                    // calculator.firstNum.push(calculator.memory);
-                    
                     let strFirstNum = calculator.firstNum.join('');
                     calculator.answer = eval(strFirstNum);
-                    calculator.output = Number(calculator.display.   innerText = calculator.answer);
-                    calculator.firstNum = [calculator.answer].concat(calculator.memory);
+                    calculator.output = Number(calculator.display.innerText = calculator.answer);
+                    calculator.firstNum = [calculator.answer]
                     // calculator.secondNum = [0];
-                    console.log(calculator.firstNum)
+                    console.log(calculator.firstNum);
 
                     
                     // calculator.lengthTest();
                     // calculator.output = Number(calculator.display.   innerText = calculator.answer);
                     // calculator.equalClear();
+                    calculator.prevAnswer = true;
+                    calculator.memCheck = false;
+                    console.log("add")
+
+                    calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.add);
+                    calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.equalAgain);
             },
 
             subtract: function(){

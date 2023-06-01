@@ -184,22 +184,41 @@ let calculator = {
     display: document.querySelector('#display'),
     output: 0,
     firstNum: [],
-    secondNum: 0,
-    answer: 0, 
-    memory: 0,
+    secondNum: [],
+    answer: null, 
+    memory: null,
     memCheck: false,
+    prevAnswer: false,
 
     pressNumButton: function(num) {
-                        calculator.firstNum.push(num)
-                        calculator.toDisplay(num);
-                        calculator.memCheck = true;
+        if(calculator.prevAnswer){
+            calculator.firstNum = [];
+            calculator.prevAnswer = false;
+        }
+        calculator.firstNum.push(num);
+        calculator.toDisplay(num);
+        calculator.memCheck = true;
+    },
+
+    pressOperatorButton: function(operator) {
+
+        calculator.prevAnswer = false;
+        calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.equalAgain);
+        calculator.memCheck = false;
+
+        calculator.firstNum.push(operator);
+        calculator.secondNum.push(operator);
+        console.log(calculator.firstNum)
+
+        
     },
 
     equalClear: function() {
-                    // calculator.firstNum = [];
-                    // calculator.secondNum = [];
-                    calculator.memCheck = false;
-                    // calculator.answer = 0;
+        calculator.output = 0;
+        calculator.firstNum = [];
+        calculator.secondNum = [];
+        calculator.memCheck = false;
+        calculator.answer = 0;
     },
 
     lengthTest: function() {
@@ -296,12 +315,11 @@ let calculator = {
             button: document.querySelector('.add'),
             memory: 
                 function() {
-                    
-                    calculator.memCheck = false;
-                    
-                    calculator.firstNum.push('+');
-                    console.log(calculator.firstNum)
-                    
+
+                    // if(calculator.prevAnswer){
+                    //     calculator.firstNum.push(calculator.output);
+                    // }
+                    calculator.pressOperatorButton('+');
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.add);
                     
                 },
@@ -311,8 +329,7 @@ let calculator = {
             button: document.querySelector('.subtract'),
             memory: 
                 function() {
-                    calculator.memCheck = false;
-                    calculator.firstNum = calculator.output;
+                    calculator.pressOperatorButton('-');
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.subtract);
                 },
@@ -322,8 +339,7 @@ let calculator = {
             button: document.querySelector('.multiply'),
             memory: 
                 function() {
-                    calculator.memCheck = false;
-                    calculator.firstNum = calculator.output;
+                    calculator.pressOperatorButton('*');
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.multiply);
                 },
@@ -333,8 +349,7 @@ let calculator = {
             button: document.querySelector('.divide'),
             memory: 
                 function() {
-                    calculator.memCheck = false;
-                    calculator.firstNum = calculator.output;
+                    calculator.pressOperatorButton('/'); 
 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.divide);
                 },
@@ -344,67 +359,70 @@ let calculator = {
             button: document.querySelector('.clear'),
             memory: 
                 function() {
+                    calculator.prevAnswer = false,
                     calculator.memCheck = false;
-                    calculator.firstNum = 0;
-                    calculator.secondNum = 0;
+                    calculator.firstNum = [];
+                    calculator.secondNum = [];
                     calculator.output = Number(calculator.display.innerText = 0);
                     calculator.answer = 0;
                     calculator.memory = 0;
                 },
         },
 
+        operatorSelector: function(operator) {
+            let operatorIndex = calculator.firstNum.lastIndexOf(operator);
+            console.log(operatorIndex)
+            console.log(calculator.firstNum.slice(operatorIndex))
+            calculator.memory = calculator.firstNum.slice(operatorIndex)
+            let strFirstNum = calculator.firstNum.join('');
+            calculator.answer = eval(strFirstNum);
+            calculator.output = Number(calculator.display.   innerText = calculator.answer);
+            calculator.firstNum = [calculator.answer].concat(calculator.memory);
+            calculator.output = Number(calculator.display.innerText = calculator.answer);
+            calculator.firstNum = [calculator.answer]
+            console.log(calculator.firstNum)
+            console.log(calculator.firstNum);
+            calculator.prevAnswer = true;
+            calculator.memCheck = false;
+        },
+
         equal: {
             button: document.querySelector('.equal'),
+
+            equalAgain: function() {
+                calculator.secondNum = calculator.firstNum;
+                calculator.secondNum = [calculator.answer].concat(calculator.memory);
+                let strSecondNum = calculator.secondNum.join('');
+                calculator.answer = eval(strSecondNum);
+                calculator.output = Number(calculator.display.innerText = calculator.answer);
+                // calculator.equalClear();
+                calculator.firstNum = [calculator.output];
+                calculator.prevAnswer = true;
+                console.log('equalAgain')
+            },
             
             add: function() { 
-
-
-                    let addIndex = calculator.firstNum.lastIndexOf('+');
-                    console.log(addIndex)
-                    console.log(calculator.firstNum.slice(addIndex))
-                    calculator.memory = calculator.firstNum.slice(addIndex)
-
-                    // calculator.firstNum.push(calculator.secondNum);
-                    // calculator.firstNum.push(calculator.memory);
-                    
-                    let strFirstNum = calculator.firstNum.join('');
-                    calculator.answer = eval(strFirstNum);
-                    calculator.output = Number(calculator.display.   innerText = calculator.answer);
-                    calculator.firstNum = [calculator.answer].concat(calculator.memory);
-                    // calculator.secondNum = [0];
-                    console.log(calculator.firstNum)
-
-                    
-                    // calculator.lengthTest();
-                    // calculator.output = Number(calculator.display.   innerText = calculator.answer);
-                    // calculator.equalClear();
+                calculator.inputs.operatorSelector('+');
+                calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.add);
+                calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.equalAgain);
             },
 
             subtract: function(){
-                        calculator.secondNum = calculator.output;
-                        calculator.answer = calculator.firstNum - calculator.secondNum;
-                        calculator.output = calculator.display.innerText = calculator.answer;
-                        calculator.firstNum = 0;
-                        calculator.secondNum = 0;
-                        calculator.memCheck = false;
+                calculator.inputs.operatorSelector('-');
+                calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.subtract);
+                calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.equalAgain);
             }, 
 
             multiply: function(){
-                        calculator.secondNum = calculator.output;
-                        calculator.answer = calculator.firstNum * calculator.secondNum;
-                        calculator.output = calculator.display.innerText = calculator.answer;
-                        calculator.firstNum = 0;
-                        calculator.secondNum = 0;
-                        calculator.memCheck = false;
+                calculator.inputs.operatorSelector('*');
+                calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.multiply);
+                calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.equalAgain);
             }, 
 
             divide: function(){
-                        calculator.secondNum = calculator.output;
-                        calculator.answer = calculator.firstNum / calculator.secondNum;
-                        calculator.output = calculator.display.innerText = calculator.answer;
-                        calculator.firstNum = 0;
-                        calculator.secondNum = 0;
-                        calculator.memCheck = false;
+                calculator.inputs.operatorSelector('/');
+                calculator.inputs.equal.button.removeEventListener('click', calculator.inputs.equal.divide);
+                calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.equalAgain);
             }, 
             
             
@@ -412,17 +430,17 @@ let calculator = {
     },
 
     toDisplay: function(num) {
-            calculator.lengthTest();
-            // let lengthTest = calculator.output.toString()
-            
-            // if (lengthTest.length > 6 ) {
-            //     calculator.output = calculator.display.innerText = "ERROR"
-            // }
-            if (calculator.memCheck === false && calculator.output !== "ERROR") {
-                calculator.output = Number(calculator.display.innerText = num);
-            } else if (calculator.memCheck !== false && calculator.output !== "ERROR") {
-                calculator.output = Number(calculator.display.innerText += num);
-            }
+        calculator.lengthTest();
+        // let lengthTest = calculator.output.toString()
+        
+        // if (lengthTest.length > 6 ) {
+        //     calculator.output = calculator.display.innerText = "ERROR"
+        // }
+        if (calculator.memCheck === false && calculator.output !== "ERROR") {
+            calculator.output = Number(calculator.display.innerText = num);
+        } else if (calculator.memCheck !== false && calculator.output !== "ERROR") {
+            calculator.output = Number(calculator.display.innerText += num);
+        }
     },
     
     init: function() {

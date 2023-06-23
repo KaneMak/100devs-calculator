@@ -111,6 +111,7 @@ let calculator = {
                 function() {
                     calculator.pressOperatorButton('+');
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.add);
+                    calculator.clearAnimation()
                     calculator.activeAnimation(calculator.inputs.addition.button)
                 },
         },
@@ -121,8 +122,8 @@ let calculator = {
                 function() {
                     calculator.pressOperatorButton('-');
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.subtract);
+                    calculator.clearAnimation()
                     calculator.activeAnimation(calculator.inputs.subtract.button)
-                    
                 },
         },
 
@@ -132,6 +133,7 @@ let calculator = {
                 function() {
                     calculator.pressOperatorButton('*');
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.multiply);
+                    calculator.clearAnimation()
                     calculator.activeAnimation(calculator.inputs.multiply.button)
                 },
         },
@@ -142,6 +144,7 @@ let calculator = {
                 function() {
                     calculator.pressOperatorButton('/'); 
                     calculator.inputs.equal.button.addEventListener('click', calculator.inputs.equal.divide);
+                    calculator.clearAnimation()
                     calculator.activeAnimation(calculator.inputs.divide.button)
                 },
         },
@@ -195,7 +198,7 @@ let calculator = {
                     calculator.memory = 0;
 
                     calculator.fadeAnimation(calculator.inputs.clear.button);
-
+                    calculator.clearAnimation()
                 },
         },
 
@@ -319,7 +322,7 @@ let calculator = {
         button.classList.add("activeColor")
     },
 
-    equalAnimation: function() {
+    clearAnimation: function() {
         document.querySelector('.add').classList.remove('activeColor')
         document.querySelector('.subtract').classList.remove('activeColor')
         document.querySelector('.multiply').classList.remove('activeColor')
@@ -344,7 +347,7 @@ let calculator = {
         calculator.inputs.negation.button.addEventListener('click', calculator.inputs.negation.negate);
         calculator.inputs.decimal.button.addEventListener('click', calculator.inputs.decimal.addDecimal);
         calculator.inputs.clear.button.addEventListener('click', calculator.inputs.clear.memory);
-        calculator.inputs.equal.button.addEventListener('click', calculator.equalAnimation)
+        calculator.inputs.equal.button.addEventListener('click', calculator.clearAnimation)
     },
 }
 

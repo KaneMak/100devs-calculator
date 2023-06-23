@@ -86,11 +86,11 @@ footer {
      font-size: 50px;
      font-weight: bold;
 }
+     
 
 .button.zero,
 .button.clear {
      grid-column: 1/3;
-     background-color: white;
      height: 66px;
      width: 135px;
      margin: auto;
@@ -100,4 +100,13 @@ footer {
      align-items: center;
      font-size: 50px;
      font-weight: bold;
+}
+
+.fadeAnimation {
+     background-color: rgb(114, 99, 99);
+     animation: fadeInOut .1s linear both;
+}
+
+.activeColor {
+     background-color: yellow;
 }
